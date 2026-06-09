@@ -1,0 +1,20 @@
+{
+  "name": "@annotate-ai/core",
+  "version": "0.1.0",
+  "description": "Universal SDK for AnnotateAI",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format iife,esm --global-name AnnotateAI --clean --dts",
+    "dev": "tsup src/index.ts --format iife,esm --global-name AnnotateAI --watch --dts",
+    "lint": "tsc"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0"
+  }
+}

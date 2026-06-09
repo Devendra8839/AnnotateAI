@@ -1,0 +1,13 @@
+{
+  "name": "annotate-ai",
+  "private": true,
+  "description": "Visual annotation tool for AI-ready code context.",
+  "scripts": {
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "dev": "pnpm -r dev"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
