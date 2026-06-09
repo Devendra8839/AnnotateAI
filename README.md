@@ -66,6 +66,8 @@ AnnotateAI automatically maps UI elements to their source files. To make this as
 
 When you click an element, the SDK walks up the DOM to find the nearest file boundary, ensuring your AI agent knows exactly which file to edit.
 
+**Zero-Config SDK:** You don't need to manually add the JS file to your project. The gem includes the SDK and serves it automatically via middleware at `/annotate_ai.js`.
+
 ---
 
 ## 🛠 Core SDK (Universal)

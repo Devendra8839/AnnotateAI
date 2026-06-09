@@ -7,10 +7,16 @@ module AnnotateAi
     end
 
     def call(env)
+      request = Rack::Request.new(env)
+      
+      # Intercept request for the SDK JS file
+      if request.path == "/annotate_ai.js"
+        return serve_sdk_js
+      end
+
       status, headers, response = @app.call(env)
 
       if should_inject?(env, status, headers)
-        # Handle different types of responses (Array, Rack::BodyProxy, etc.)
         body = []
         response.each { |part| body << part }
         response.close if response.respond_to?(:close)
@@ -25,11 +31,19 @@ module AnnotateAi
 
     private
 
+    def serve_sdk_js
+      asset_path = File.expand_path("assets/annotate_ai.js", __dir__)
+      if File.exist?(asset_path)
+        [200, { "Content-Type" => "text/javascript" }, [File.read(asset_path)]]
+      else
+        [404, { "Content-Type" => "text/plain" }, ["AnnotateAI SDK not found"]]
+      end
+    end
+
     def should_inject?(env, status, headers)
       return false unless status == 200
       return false unless headers["Content-Type"]&.include?("text/html")
       
-      # Use Rack::Request for safe param access
       request = Rack::Request.new(env)
       request.params["annotate"] == "true" || request.params["annotate_ai"] == "true"
     end
@@ -37,11 +51,6 @@ module AnnotateAi
     def inject_script(html)
       return html unless html.include?("</body>")
 
-      # SDK_URL could be configurable. For now, we point to the local built version if available?
-      # No, for the gem it should probably be a CDN or we host it in the app.
-      # For this MVP/Demo, we'll stick to a placeholder or even better, 
-      # we can serve it via a custom route in the railtie.
-      
       script_tag = <<~HTML
         <script>
           (function() {
