@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.name = "annotate_ai"
   spec.version = AnnotateAi::VERSION
   spec.authors = ["Devendra Bangar"]
-  spec.email = ["devendrabangar8@gmail..com"]
+  spec.email = ["devendrabangar8@gmail.com"]
 
   spec.summary = "Rails adapter for AnnotateAI visual annotation tool."
   spec.description = "Injects source metadata into Rails views to enable precise AI prompts."
